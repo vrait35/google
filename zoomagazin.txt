@@ -1,0 +1,124 @@
+# google
+
+create database anuar_bez2
+use anuar_bez2
+create table tovar(
+id_tovar int primary key identity(1,1),
+name varchar(50)
+)
+create table klients(
+id_klient int primary key identity(1,1),
+number_diskont int
+)
+create table prodazhi(
+id_tovar int foreign key references tovar(id_tovar),
+id_klient int foreign key references klients(id_klient)
+)
+
+alter table tovar
+add cena int
+select*from tovar
+
+insert tovar(name) values('кошка')
+insert tovar(name) values('собака')
+insert tovar(name) values('попугай')
+insert tovar(name) values('цепь')
+insert tovar(name) values('одеяло для кошек')
+insert tovar(name) values('клетка для попугаев')
+
+insert klients(number_diskont) values(8340576)
+insert klients(number_diskont) values(2345778)
+insert klients(number_diskont) values(5734525)
+insert klients(number_diskont) values (0)
+alter table klients
+add pr int
+
+ALTER TABLE klients  
+ADD CONSTRAINT default2  
+DEFAULT 0 FOR number_diskont
+alter table klients
+drop default2
+
+ALTER TABLE klients  
+ADD CONSTRAINT default1  
+DEFAULT 0 FOR pr  
+
+alter table prodazhi
+add summa int
+
+select*from klients
+insert prodazhi(id_tovar,id_klient) values(4,1)
+insert prodazhi(id_tovar,id_klient) values(1,3)
+insert prodazhi(id_tovar,id_klient) values(3,3)
+insert prodazhi(id_tovar,id_klient) values(2,2)
+insert prodazhi(id_tovar,id_klient) values(2,2)
+insert prodazhi(id_tovar,id_klient) values(4,1)
+insert prodazhi(id_tovar,id_klient) values(1,1)
+insert prodazhi(id_tovar,id_klient) values(3,3)
+select*from prodazhi
+
+--alter table klients drop column number_diskont
+create table itog_summ(
+id_klient int foreign key references klients(id_klient),
+summ int
+)
+
+--supertrigger
+create trigger tt
+on prodazhi
+for insert
+as
+declare @id_klient int
+select  @id_klient=i.id_klient
+from inserted i 
+
+declare @id_tovar int
+select @id_tovar=i.id_tovar
+from inserted i
+
+declare @cena int
+select @cena=t.cena
+from tovar t
+where t.id_tovar=@id_tovar
+
+declare @id_est int
+
+select @id_est=isq.id_klient
+from itog_summ as isq
+where @id_klient=isq.id_klient
+
+if @id_est is null
+begin 
+insert itog_summ(id_klient,summ) 
+values(@id_klient,@cena)
+end
+else begin
+declare @buf int 
+select @buf=iq.summ
+from itog_summ iq 
+where @id_klient=iq.id_klient
+update itog_summ  set  summ+=@cena
+where @id_klient=itog_summ.id_klient
+end
+declare @s int
+select @s=its.summ from itog_summ its where its.id_klient=@id_klient
+if @s>10000
+begin
+declare @q int
+select @q=k.number_diskont from klients k
+ where k.id_klient=@id_klient
+ if @q=0
+ begin 
+ update klients set number_diskont=rand() 
+  where klients.id_klient=@id_klient
+  update klients set pr=3
+  where klients.id_klient=@id_klient  
+ end
+ else begin
+ update klients set pr+=1
+  where klients.id_klient=@id_klient
+ end
+end
+
+--------------()()()()()
+
