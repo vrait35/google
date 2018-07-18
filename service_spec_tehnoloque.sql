@@ -1,6 +1,3 @@
-# google
-
-
 create database service_spec_tehnique
 use service_spec_tehnique
 --таблица пользователей
@@ -80,6 +77,7 @@ photo varchar(100)
 )
 
 --триггер добавляющий в таблицу все объявления(all_decl) зарегистрированного пользователя которые оплатили
+--и добавляющий в таблицу мои объявления
 create trigger trigger_insert__all_decl_insert__look_my_decl
 on give_declaration_zar_user
 for insert
@@ -103,6 +101,7 @@ end
 
 
 --триггер для автоматической регистрации пользователя при добавлении объявления  и в  таблицу все объявления если оплатил
+--и добавляющий в таблицу мои объявления
 create trigger trigger__give_declaration_nozar_user_
 on give_declaration_nozar_user
 for insert
@@ -125,6 +124,4 @@ end
 else begin
 insert look_my_decl(id_decl_user,id_user,number_day,status) values(@id_decl_user,@id_user,0,0)
 end
-
-
 
