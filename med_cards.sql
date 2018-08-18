@@ -16,8 +16,8 @@ use med_cardsDB
 	5.datetime_end	          5.datetime_end
 	6.id_hospital		  6.id_hospital
 ------------------------    ------------------------  
-      ^								                ^
-	  |									                |
+          ^					  ^
+	  |	                                  |
 	operation_med				lie_med
 	1.id_operation				1.id_lie
 	2.id_medecine(код лекарства)		2.id_medecine(код лекарства)
