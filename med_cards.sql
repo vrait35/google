@@ -4,28 +4,28 @@ create database med_cardsDB
 use med_cardsDB
 
 --СТРУКТУРА БД:
-                     cards
-					 1.id_card
-					 2.id_person
+                         cards
+		        1.id_card
+	                2.id_person
 	 --1--                         --2-- 
 	history_operation         history_lie(лежать в больнице)
-	1.id_operation		    	  1.id_lie
-	2.id_card				          2.id_card
-	3.name					          3.name
-	4.datetime_begin		      4.datetime_begin
-	5.datetime_end			      5.datetime_end
-	6.id_hospital			        6.id_hospital
+	1.id_operation		  1.id_lie
+	2.id_card		  2.id_card
+	3.name			  3.name
+	4.datetime_begin	  4.datetime_begin
+	5.datetime_end	          5.datetime_end
+	6.id_hospital		  6.id_hospital
 ------------------------    ------------------------  
       ^								                ^
 	  |									                |
-	operation_med					         	lie_med
-	1.id_operation					      	1.id_lie
+	operation_med				lie_med
+	1.id_operation				1.id_lie
 	2.id_medecine(код лекарства)		2.id_medecine(код лекарства)
 	3.id_type_med(укол_таблетка)		3.id_type_med(укол_таблетка)
 
-	operation_doc					          	operation_doc
-	1.id_operation				         		1.id_lie
-	2.id_doctor						          	2.id_doctor
+	operation_doc			        operation_doc
+	1.id_operation				1.id_lie
+	2.id_doctor			        2.id_doctor
 
 	--3----
 	history_visit
