@@ -2,7 +2,7 @@
 
 
 --База данных db_anuar_agent, 
---server: A-306-04
+--server: A-306-04 (CORP\темирбулата)
 --Задания: anuar_finish
 
 
